@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ffcc00'/></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LP.GG - 랭크 선택</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 20px;
+            background: linear-gradient(135deg, #ffcc00, #ffdd55);
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff6600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        .rank-buttons, .special-rank-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .special-rank-buttons {
+            margin-top: 25px;
+        }
+        .sub-rank-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .offset {
+            margin-left: 5px;
+        }
+        button {
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            background-color: #007BFF;
+            color: white;
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
+            width: 110px;
+            height: 40px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .active {
+            background-color: #28a745 !important;
+        }
+        .hidden {
+            display: none;
+        }
+        #selectedRank {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #222;
+        }
+        .special-rank-buttons button {
+            width: 140px;
+            height: 40px;
+        }
+        @media (max-width: 600px) {
+            .rank-buttons {
+                justify-content: center;
+            }
+            .rank-buttons.offset {
+                margin-left: 0;
+            }
+            .sub-rank-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">LP.GG</div>
+        <h2>랭크 선택</h2>
+        <div class="rank-buttons">
+            <button onclick="selectRank(this, 'IRON')">IRON</button>
+            <button onclick="selectRank(this, 'BRONZE')">BRONZE</button>
+            <button onclick="selectRank(this, 'SILVER')">SILVER</button>
+            <button onclick="selectRank(this, 'GOLD')">GOLD</button>
+        </div>
+        <div class="rank-buttons">
+            <button onclick="selectRank(this, 'PLATINUM')">PLATINUM</button>
+            <button onclick="selectRank(this, 'EMERALD')">EMERALD</button>
+            <button onclick="selectRank(this, 'DIAMOND')">DIAMOND</button>
+        </div>
+        <div class="special-rank-buttons">
+            <button onclick="selectRank(this, 'MASTER')">MASTER</button>
+            <button onclick="selectRank(this, 'GRANDMASTER')">GRANDMASTER</button>
+            <button onclick="selectRank(this, 'CHALLENGER')">CHALLENGER</button>
+        </div>
+        
+        <div id="subRankContainer" class="sub-rank-buttons hidden">
+            <button onclick="selectSubRank(this, 'IV')">IV</button>
+            <button onclick="selectSubRank(this, 'III')">III</button>
+            <button onclick="selectSubRank(this, 'II')">II</button>
+            <button onclick="selectSubRank(this, 'I')">I</button>
+        </div>
+
+        <div id="selectedRank"></div>
+    </div>
+    
+    <script>
+        let selectedMainRank = "";
+        let activeMainButton = null;
+        let activeSubButton = null;
+        
+        function selectRank(button, rank) {
+            const subRankContainer = document.getElementById('subRankContainer');
+            const selectedRankDisplay = document.getElementById('selectedRank');
+            
+            if (activeMainButton) {
+                activeMainButton.classList.remove('active');
+            }
+            button.classList.add('active');
+            activeMainButton = button;
+            
+            if (["IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD", "DIAMOND"].includes(rank)) {
+                subRankContainer.classList.remove('hidden');
+                selectedMainRank = rank;
+            } else {
+                subRankContainer.classList.add('hidden');
+                selectedMainRank = rank;
+                selectedRankDisplay.textContent = `선택한 랭크: ${rank}`;
+            }
+            
+            if (activeSubButton) {
+                activeSubButton.classList.remove('active');
+                activeSubButton = null;
+            }
+            
+            if (!["IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD", "DIAMOND"].includes(rank)) {
+                selectedRankDisplay.textContent = `선택한 랭크: ${rank}`;
+            } else {
+                selectedRankDisplay.textContent = "";
+            }
+        }
+        
+        function selectSubRank(button, subRank) {
+            const selectedRankDisplay = document.getElementById('selectedRank');
+            
+            if (activeSubButton) {
+                activeSubButton.classList.remove('active');
+            }
+            button.classList.add('active');
+            activeSubButton = button;
+            
+            if (selectedMainRank) {
+                selectedRankDisplay.textContent = `선택한 랭크: ${selectedMainRank} ${subRank}`;
+            }
+        }
+    </script>
+</body>
+</html>
