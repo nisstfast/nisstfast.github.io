@@ -44,7 +44,7 @@
             margin-top: 30px;
         }
         .offset {
-            margin-left: 10px;
+            margin-left: 5px;
         }
         button {
             padding: 12px 16px;
@@ -88,6 +88,9 @@
             .rank-buttons {
                 justify-content: center;
             }
+            .rank-buttons.offset {
+                margin-left: 0;
+            }
             .sub-rank-buttons {
                 flex-wrap: wrap;
             }
@@ -104,7 +107,7 @@
             <button onclick="selectRank(this, 'SILVER')">SILVER</button>
             <button onclick="selectRank(this, 'GOLD')">GOLD</button>
         </div>
-        <div class="rank-buttons offset">
+        <div class="rank-buttons">
             <button onclick="selectRank(this, 'PLATINUM')">PLATINUM</button>
             <button onclick="selectRank(this, 'EMERALD')">EMERALD</button>
             <button onclick="selectRank(this, 'DIAMOND')">DIAMOND</button>
